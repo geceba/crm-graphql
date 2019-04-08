@@ -6,13 +6,20 @@ const schema = buildSchema(`
         nombre: String
         apellido: String
         empresa: String
-        emails: [Email]
-    }
-    type Email {
         email: String
     }
     type Query {
         cliente: Cliente
+    }
+    input ClienteInput {
+        id: ID
+        nombre: String!
+        apellido: String!
+        empresa: String!
+        email: String!
+    }
+    type Mutation {
+        crearCliente(input: ClienteInput): Cliente
     }
 `);
 
