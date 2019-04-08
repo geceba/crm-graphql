@@ -42,7 +42,10 @@ const schema = buildSchema(`
         pedidos: [PedidoInput]
         emails: [EmailInput]
     }
+    """ Mutations para crear nuevos clientes """
     type Mutation {
+        #nombre del resolver, Input con datos y el valor que retorna
+        """ te permite crear nuevos clientes """
         crearCliente(input: ClienteInput): Cliente
     }
 `);
