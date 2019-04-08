@@ -9,7 +9,7 @@ const schema = buildSchema(`
         email: String
     }
     type Query {
-        cliente: Cliente
+        getCliente(id: ID): Cliente
     }
     input ClienteInput {
         id: ID
