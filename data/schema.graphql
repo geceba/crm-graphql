@@ -21,6 +21,7 @@ type Cliente {
         PREMIUM
     }
     type Query {
+        getClientes(limite: Int): [Cliente]
         getCliente(id: ID): Cliente
     }
     input EmailInput {
@@ -46,4 +47,6 @@ type Cliente {
         #nombre del resolver, Input con datos y el valor que retorna
         """ te permite crear nuevos clientes """
         crearCliente(input: ClienteInput): Cliente
+        actualizarCliente(input: ClienteInput): Cliente
+        eliminarCliente(id: ID!): String
     }
