@@ -1,7 +1,4 @@
-import { buildSchema } from 'graphql';
-
-const schema = buildSchema(`
-    type Cliente {
+type Cliente {
         id: ID
         nombre: String
         apellido: String
@@ -18,6 +15,7 @@ const schema = buildSchema(`
     type Email {
         email: String
     }
+    """ Asigna la categoria del cliente"""
     enum TipoCliente {
         BASICO
         PREMIUM
@@ -32,6 +30,7 @@ const schema = buildSchema(`
         producto: String
         precio: Int
     }
+    """ Campos para los clientes nuevos"""
     input ClienteInput {
         id: ID
         nombre: String!
@@ -48,6 +47,3 @@ const schema = buildSchema(`
         """ te permite crear nuevos clientes """
         crearCliente(input: ClienteInput): Cliente
     }
-`);
-
-export default schema;
