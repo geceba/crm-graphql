@@ -9,6 +9,7 @@
   "author": "geceba",
   "license": "ISC",
   "dependencies": {
+    "apollo-server-express": "^2.7.2",
     "express": "^4.16.4",
     "express-graphql": "^0.7.1",
     "graphql": "^14.2.1",
