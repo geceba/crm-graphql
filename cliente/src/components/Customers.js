@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { Query } from 'react-apollo';
 import { CUSTOMERS_QUERY } from '../queries';
+import { Link } from 'react-router-dom';
 
 const Customers = () => (
 	<Query query={CUSTOMERS_QUERY}>
@@ -10,8 +11,8 @@ const Customers = () => (
 
 			return (
 				<Fragment>
-					<h2 className="text-center mt-4">List of costumers</h2>
-					<ul className="list-group mt-4">
+					<h2 className="text-center">List of costumers</h2>
+					<ul className="list-group">
 						{data.getClientes.map((item) => (
 							<li key={item.id} className="list-group-item">
 								<div className="row justify-content-between align-items-center">
@@ -20,7 +21,7 @@ const Customers = () => (
 									</div>
 
 									<div className="col-md-4 d-flex justify-content-end">
-										<a className="btn btn-success d-block d-md-inline-block">Edit Customer</a>
+										<Link to={`/customer/edit/${item.id}`}  className="btn btn-success d-block d-md-inline-block">Edit Customer</Link>
 									</div>
 								</div>
 							</li>
