@@ -4,14 +4,14 @@ import { CUSTOMERS_QUERY } from '../queries';
 import { Link } from 'react-router-dom';
 
 const Customers = () => (
-	<Query query={CUSTOMERS_QUERY}>
-		{({ loading, error, data }) => {
+	<Query query={CUSTOMERS_QUERY} pollInterval={1000}>
+		{({ loading, error, data, startPolling, stopPolling }) => {
 			if (loading) return 'Loading...';
 			if (error) return `Error: ${error.message}`;
 
 			return (
 				<Fragment>
-					<h2 className="text-center">List of costumers</h2>
+					<h2 className="text-center">Listado de Clientes</h2>
 					<ul className="list-group">
 						{data.getClientes.map((item) => (
 							<li key={item.id} className="list-group-item">
