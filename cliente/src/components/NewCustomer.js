@@ -22,6 +22,26 @@ class NewCustomer extends Component {
 		});
 	};
 
+	quitarCampo = (index) => () => {
+		this.setState({
+			emails: this.state.emails.filter((email, idx) => index !== idx)
+		});
+	};
+
+	leerCampo = (index) => (e) => {
+		const nuevoEmail= this.state.emails.map((email, idx) => {
+			if(index  !== idx ) return email;
+			return {
+				...email,
+				email: e.target.value
+			}
+		});
+
+		this.setState({
+			emails: nuevoEmail
+		});
+	}
+
 	render() {
 		const { error } = this.state;
 
@@ -41,7 +61,8 @@ class NewCustomer extends Component {
 								className="col-md-8 m-3"
 								onSubmit={(e) => {
 									e.preventDefault();
-									const { nombre, apellido, empresa, edad, email, tipo } = this.state.cliente;
+									const { nombre, apellido, empresa, edad, tipo } = this.state.cliente;
+									const { emails } = this.state;
 
 									if (
 										nombre === '' ||
@@ -65,7 +86,7 @@ class NewCustomer extends Component {
 										apellido,
 										empresa,
 										edad: Number(edad),
-										email,
+										emails,
 										tipo
 									};
 
@@ -125,11 +146,23 @@ class NewCustomer extends Component {
 									{this.state.emails.map((input, index) => (
 										<div key={index} className="form-group col-md-12">
 											<label>Correo {index + 1}:</label>
-											<input 
-												type="email"
-												className="form-control"
-												placeholder="email"
-											/>
+											<div className="input-group">
+												<input
+													type="email"
+													className="form-control"
+													placeholder="email"
+													onChange={this.leerCampo(index)}
+												/>
+												<div className="input-group-append">
+													<button
+														type="button"
+														className="btn btn-danger"
+														onClick={this.quitarCampo(index)}
+													>
+														&times; Eliminar
+													</button>
+												</div>
+											</div>
 										</div>
 									))}
 									<div className="form-group d-flex justify-content-center col-md-12">
