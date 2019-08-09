@@ -14,6 +14,7 @@ export const CUSTOMERS_QUERY = gql`
 export const CUSTOMER_QUERY = gql`
 	query ConsultarCliente($id: ID) {
 		getCliente(id: $id) {
+			id
 			nombre
 			apellido
 			empresa

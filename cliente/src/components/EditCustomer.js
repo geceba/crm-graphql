@@ -15,12 +15,13 @@ class EditCustomer extends Component {
 
 				<div className="row justify-content-center">
 					<Query query={CUSTOMER_QUERY} variables={{id}}>
-						{({ loading, error, data }) => {
+						{({ loading, error, data, refetch }) => {
 							if (loading) return 'cargando...';
 							if (error) return `Error!  ${error.message}`;
                             console.log(data)
 							return <FormEdit 
-                                cliente={data.getCliente}
+								cliente={data.getCliente}
+								refetch={refetch}
                             />;
 						}}
 					</Query>
