@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { Query } from 'react-apollo';
 import { CUSTOMERS_QUERY } from '../queries';
 import { Link } from 'react-router-dom';
+import { DELETE_CUSTOMER } from '../mutations';
 
 const Customers = () => (
 	<Query query={CUSTOMERS_QUERY} pollInterval={1000}>
@@ -21,6 +22,13 @@ const Customers = () => (
 									</div>
 
 									<div className="col-md-4 d-flex justify-content-end">
+										<button type="button" className="btn btn-danger d-block d-md-inline-block mr-2"
+											onClick={() => {
+												//console.log(object)
+											}}
+										>
+											&times; Eliminar
+										</button>
 										<Link to={`/customer/edit/${item.id}`}  className="btn btn-success d-block d-md-inline-block">Edit Customer</Link>
 									</div>
 								</div>
