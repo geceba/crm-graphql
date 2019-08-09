@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Query } from 'react-apollo';
+import { Query, Mutation } from 'react-apollo';
 import { CUSTOMERS_QUERY } from '../queries';
 import { Link } from 'react-router-dom';
 import { DELETE_CUSTOMER } from '../mutations';
@@ -14,26 +14,44 @@ const Customers = () => (
 				<Fragment>
 					<h2 className="text-center">Listado de Clientes</h2>
 					<ul className="list-group">
-						{data.getClientes.map((item) => (
-							<li key={item.id} className="list-group-item">
-								<div className="row justify-content-between align-items-center">
-									<div className="col-md-8 justify-content-between align-items-center">
-										{item.nombre} {item.apellido} - {item.empresa}
-									</div>
+						{data.getClientes.map((item) => {
+							const {id} = item;
+							return (
+								<li key={item.id} className="list-group-item">
+									<div className="row justify-content-between align-items-center">
+										<div className="col-md-8 justify-content-between align-items-center">
+											{item.nombre} {item.apellido} - {item.empresa}
+										</div>
 
-									<div className="col-md-4 d-flex justify-content-end">
-										<button type="button" className="btn btn-danger d-block d-md-inline-block mr-2"
-											onClick={() => {
-												//console.log(object)
-											}}
-										>
-											&times; Eliminar
-										</button>
-										<Link to={`/customer/edit/${item.id}`}  className="btn btn-success d-block d-md-inline-block">Edit Customer</Link>
+										<div className="col-md-4 d-flex justify-content-end">
+											<Mutation mutation={DELETE_CUSTOMER}>
+												{ eliminarCliente => (
+													<button
+														type="button"
+														className="btn btn-danger d-block d-md-inline-block mr-2"
+														onClick={() => {
+															if(window.confirm('Seguro que quieres eliminar este cliente?')) {
+																eliminarCliente({
+																	variables: {id}
+																});
+															}
+														}}
+													>
+														&times; Eliminar
+													</button>
+												)}
+											</Mutation>
+											<Link
+												to={`/customer/edit/${item.id}`}
+												className="btn btn-success d-block d-md-inline-block"
+											>
+												Edit Customer
+											</Link>
+										</div>
 									</div>
-								</div>
-							</li>
-						))}
+								</li>
+							);
+						})}
 					</ul>
 				</Fragment>
 			);
