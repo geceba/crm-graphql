@@ -23,6 +23,7 @@ type Cliente {
     type Query {
         getClientes(limite: Int, offset: Int): [Cliente]
         getCliente(id: ID): Cliente
+        totalClientes : String
     }
     input EmailInput {
         email: String

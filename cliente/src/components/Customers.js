@@ -3,6 +3,7 @@ import { Query, Mutation } from 'react-apollo';
 import { CUSTOMERS_QUERY } from '../queries';
 import { Link } from 'react-router-dom';
 import { DELETE_CUSTOMER } from '../mutations';
+import Paginator from './Paginator';
 
 class Customers extends Component {
 
@@ -67,6 +68,7 @@ class Customers extends Component {
 									);
 								})}
 							</ul>
+							<Paginator actual={this.state.paginador.actual} totalCLientes={data.totalCLientes} />
 						</Fragment>
 					);
 				}}
