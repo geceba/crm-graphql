@@ -21,7 +21,7 @@ type Cliente {
         PREMIUM
     }
     type Query {
-        getClientes(limite: Int): [Cliente]
+        getClientes(limite: Int, offset: Int): [Cliente]
         getCliente(id: ID): Cliente
     }
     input EmailInput {
