@@ -6,6 +6,7 @@ import { DELETE_CUSTOMER } from '../mutations';
 import Paginator from './Paginator';
 
 class Customers extends Component {
+	limite = 10;
 
 	state = {
 		paginador: {
@@ -68,7 +69,11 @@ class Customers extends Component {
 									);
 								})}
 							</ul>
-							<Paginator actual={this.state.paginador.actual} totalCLientes={data.totalCLientes} />
+							<Paginator
+								actual={this.state.paginador.actual}
+								totalClientes={data.totalClientes}
+								limite={this.limite}
+							/>
 						</Fragment>
 					);
 				}}
