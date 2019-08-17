@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Clientes } from './db';
+import { Clientes, Productos } from './db';
 import { rejects } from 'assert';
 
 export const resolvers = {
@@ -61,7 +61,25 @@ export const resolvers = {
 					else resolve("Se eliminó correctamente")
 				});
 			});
-        }
+		},
+		
+		// Productos
+		nuevoProducto: (root, {input}) => {
+			const nuevoProducto= new Productos({
+				nombre: input.nombre,
+				precio: input.precio,
+				stock: input.stock
+			});
+			// mongo debe crea el id que se asigna al objeto
+			nuevoProducto.id = nuevoProducto._id;
+
+			return new Promise((resolve, object) => {
+				nuevoProducto.save((err) => {
+					if (err) rejects(err);
+					else resolve(nuevoProducto);
+				});
+			});
+		}
 
         
 	}

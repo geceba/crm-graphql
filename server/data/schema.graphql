@@ -25,6 +25,13 @@ type Cliente {
         getCliente(id: ID): Cliente
         totalClientes : String
     }
+    type Producto {
+        id: ID
+        nombre: String!
+        precio: Float!
+        stock: Int!
+    }
+    # INPUTS ==========================================================
     input EmailInput {
         email: String
     }
@@ -43,6 +50,15 @@ type Cliente {
         pedidos: [PedidoInput]
         emails: [EmailInput]
     }
+
+    """ Input para productos """
+    input ProductoInput {
+        id: ID
+        nombre: String!
+        precio: Float!
+        stock: Int!
+    }
+
     """ Mutations para crear nuevos clientes """
     type Mutation {
         #nombre del resolver, Input con datos y el valor que retorna
@@ -50,4 +66,7 @@ type Cliente {
         crearCliente(input: ClienteInput): Cliente
         actualizarCliente(input: ClienteInput): Cliente
         eliminarCliente(id: ID!): String
+
+        # Productos
+        nuevoProducto(input: ProductoInput) : Producto
     }
