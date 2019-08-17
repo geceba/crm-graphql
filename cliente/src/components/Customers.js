@@ -6,7 +6,7 @@ import { DELETE_CUSTOMER } from '../mutations';
 import Paginator from './Paginator';
 
 class Customers extends Component {
-	limite = 10;
+	limite = 4;
 
 	state = {
 		paginador: {
@@ -15,9 +15,31 @@ class Customers extends Component {
 		}
 	};
 
+	paginaAnterior = () => {
+		this.setState({
+			paginador: {
+				offset: this.state.paginador.offset - this.limite,
+				actual: this.state.paginador.actual - 1
+			}
+		});
+	};
+
+	paginaSiguiente = () => {
+		this.setState({
+			paginador: {
+				offset: this.state.paginador.offset + this.limite,
+				actual: this.state.paginador.actual + 1
+			}
+		});
+	};
+
 	render() {
 		return (
-			<Query query={CUSTOMERS_QUERY} pollInterval={1000}>
+			<Query
+				query={CUSTOMERS_QUERY}
+				pollInterval={1000}
+				variables={{ limite: this.limite, offset: this.state.paginador.offset }}
+			>
 				{({ loading, error, data, startPolling, stopPolling }) => {
 					if (loading) return 'Loading...';
 					if (error) return `Error: ${error.message}`;
@@ -73,6 +95,8 @@ class Customers extends Component {
 								actual={this.state.paginador.actual}
 								totalClientes={data.totalClientes}
 								limite={this.limite}
+								paginaAnterior={this.paginaAnterior}
+								paginaSiguiente={this.paginaSiguiente}
 							/>
 						</Fragment>
 					);
