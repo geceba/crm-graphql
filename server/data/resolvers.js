@@ -22,6 +22,18 @@ export const resolvers = {
 					else resolve(count);
 				});
 			});
+		},
+		// productos
+		getProductos : (root, {limite, offset}) => {
+			return Productos.find({}).limit(limite).skip(offset)
+		},
+		getProducto : (root, {id}) => {
+			return new Promise((resolve, object) =>{
+				Productos.findById(id, (error, producto) => {
+					if(error) rejects(error);
+					else resolve(producto);
+				});
+			});
 		}
 	},
 	Mutation: {
@@ -56,7 +68,7 @@ export const resolvers = {
         },
         eliminarCliente: (root, {id}) => {
             return new Promise((resolve, object) => {
-				Clientes.findOneAndRemove({_id: id}, (err) => {
+				Clientes.findOneAndDelete({_id: id}, (err) => {
 					if(err) rejects(err)
 					else resolve("Se eliminó correctamente")
 				});
@@ -70,13 +82,29 @@ export const resolvers = {
 				precio: input.precio,
 				stock: input.stock
 			});
-			// mongo debe crea el id que se asigna al objeto
+			// mongo debe crear el id que se asigna al objeto
 			nuevoProducto.id = nuevoProducto._id;
 
 			return new Promise((resolve, object) => {
 				nuevoProducto.save((err) => {
 					if (err) rejects(err);
 					else resolve(nuevoProducto);
+				});
+			});
+		},
+		actualizarProducto: (root, {input}) => {
+			return new Promise((resolve, producto) => {
+				Productos.findOneAndUpdate({_id: input.id}, input, {new: true}, (error, producto) => {
+					if(error) rejects(error);
+					else resolve(producto);
+				});
+			});
+		},
+		eliminarProducto: (root, {id}) => {
+			return new Promise((resolve, producto) => {
+				Productos.findOneAndDelete({_id: id}, (error) => {
+					if(error) rejects(error);
+					else resolve('Se eliminó correctamente');
 				});
 			});
 		}
