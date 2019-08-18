@@ -27,3 +27,15 @@ export const CUSTOMER_QUERY = gql`
 		}
 	}
 `;
+
+// productos
+export const GET_PRODUCTS = gql`
+	query {
+		getProductos {
+			id
+			nombre
+			precio
+			stock
+		}
+	}
+`;
