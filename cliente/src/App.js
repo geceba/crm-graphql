@@ -1,13 +1,14 @@
 import React, { Fragment } from 'react';
 import { ApolloProvider } from 'react-apollo';
 import ApolloClient, { InMemoryCache } from 'apollo-boost';
-import Customers from './components/Customers';
-import NewCustomer from './components/NewCustomer';
-import EditCustomer from './components/EditCustomer';
+import Customers from './components/customers/Customers';
+import NewCustomer from './components/customers/NewCustomer';
+import EditCustomer from './components/customers/EditCustomer';
+import NewProduct from './components/products/NewProduct';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 // import components
-import Header from './components/Header';
+import Header from './components/layout/Header';
 
 const client = new ApolloClient({
 	uri: 'http://localhost:4000/graphql',
@@ -31,6 +32,7 @@ function App() {
               <Route exact path="/" component={Customers} />
               <Route exact path="/customer/edit/:id" component={EditCustomer} />
               <Route exact path="/customer/new" component={NewCustomer} />
+              <Route exact path="/product/new" component={NewProduct} />
             </Switch>
 					</div>
 				</Fragment>

@@ -1,9 +1,9 @@
 import React, { Fragment, Component } from 'react';
 import { Query, Mutation } from 'react-apollo';
-import { CUSTOMERS_QUERY } from '../queries';
+import { CUSTOMERS_QUERY } from '../../queries';
 import { Link } from 'react-router-dom';
-import { DELETE_CUSTOMER } from '../mutations';
-import Paginator from './Paginator';
+import { DELETE_CUSTOMER } from '../../mutations';
+import Paginator from '../Paginator';
 
 class Customers extends Component {
 	limite = 4;

@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { NEW_CUSTOMER } from '../mutations';
+import { NEW_CUSTOMER } from '../../mutations';
 import { Mutation } from 'react-apollo';
 
 class NewCustomer extends Component {

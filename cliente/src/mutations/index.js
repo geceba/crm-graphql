@@ -31,3 +31,12 @@ export const DELETE_CUSTOMER = gql`
 		eliminarCliente(id: $id)
 	}
 `;
+
+// PRODUCTS
+export const NEW_PRODUCT = gql`
+	mutation nuevoProducto($input: ProductoInput) {
+		nuevoProducto(input: $input) {
+			nombre
+		}
+	}
+`;

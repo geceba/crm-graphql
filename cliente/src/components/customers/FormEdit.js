@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { UPDATE_CUSTOMER } from '../mutations';
+import { UPDATE_CUSTOMER } from '../../mutations';
 import { Mutation } from 'react-apollo';
 import { withRouter } from 'react-router-dom';
 
