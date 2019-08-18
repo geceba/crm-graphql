@@ -1,14 +1,25 @@
 import React, { Component, Fragment } from 'react';
-import { Query } from 'react-apollo';
+import { Query, Mutation } from 'react-apollo';
 import { GET_PRODUCTS } from './../../queries';
+import { DELETE_PRODUCT } from './../../mutations';
 import { Link } from 'react-router-dom';
+import Success from '../alerts/Success';
 
 class Product extends Component {
-	state = {};
+	state = {
+		alerta: {
+			mostrar: false,
+			mensaje: ''
+		}
+	};
 	render() {
+		const { alerta: { mostrar, mensaje } } = this.state;
+
+		const alerta = mostrar ? <Success mensaje={mensaje} /> : '';
 		return (
 			<Fragment>
 				<h1 className="text-center mb-5">Productos</h1>
+                {alerta}
 				<Query query={GET_PRODUCTS} pollInterval={1000}>
 					{({ loading, error, data, startPolling, stopPolling }) => {
 						if (loading) return 'Loading...';
@@ -36,15 +47,49 @@ class Product extends Component {
 												<td>{item.precio}</td>
 												<td>{item.stock}</td>
 												<td>
-													<button type="button" className="btn btn-danger">
-														&times; Eliminar
-													</button>
+													<Mutation mutation={DELETE_PRODUCT} onCompleted={(data) => {
+                                                        this.setState({
+                                                            alerta: {
+                                                                mostrar: true,
+                                                                mensaje: data.eliminarProducto
+                                                            }
+                                                        }, () => {
+                                                            setTimeout(() => {
+                                                                this.setState({
+                                                                    alerta: {
+                                                                        mostrar: false,
+                                                                        mensaje: ''
+                                                                    }
+                                                                })
+                                                            }, 2000)
+                                                        })
+                                                    }}>
+														{(eliminarProducto) => (
+															<button
+																type="button"
+																className="btn btn-danger"
+																onClick={() => {
+																	if (
+																		window.confirm(
+																			'¿Seguro que quieres eliminar este producto?'
+																		)
+																	) {
+																		eliminarProducto({
+																			variables: { id }
+																		});
+																	}
+																}}
+															>
+																&times; Eliminar
+															</button>
+														)}
+													</Mutation>
 												</td>
-                                                <td>
-                                                    <Link to={`/products/edit/${id}`} className="btn btn-success">
-                                                        Editar Producto
-                                                    </Link>
-                                                </td>
+												<td>
+													<Link to={`/products/edit/${id}`} className="btn btn-success">
+														Editar Producto
+													</Link>
+												</td>
 											</tr>
 										);
 									})}
