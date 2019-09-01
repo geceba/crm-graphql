@@ -5,13 +5,40 @@ import { DELETE_PRODUCT } from './../../mutations';
 import { Link } from 'react-router-dom';
 import Success from '../alerts/Success';
 
+import Paginator from "../Paginator";
+
 class Product extends Component {
+	limite = 2;
+
 	state = {
 		alerta: {
 			mostrar: false,
 			mensaje: ''
+		},
+		paginador: {
+			offset: 0,
+			actual: 1
 		}
 	};
+
+	paginaAnterior = () => {
+		this.setState({
+			paginador: {
+				offset: this.state.paginador.offset - this.limite,
+				actual: this.state.paginador.actual - 1
+			}
+		});
+	};
+
+	paginaSiguiente = () => {
+		this.setState({
+			paginador: {
+				offset: this.state.paginador.offset + this.limite,
+				actual: this.state.paginador.actual + 1
+			}
+		});
+	};
+
 	render() {
 		const { alerta: { mostrar, mensaje } } = this.state;
 
@@ -20,16 +47,16 @@ class Product extends Component {
 			<Fragment>
 				<h1 className="text-center mb-5">Productos</h1>
                 {alerta}
-				<Query query={GET_PRODUCTS} pollInterval={1000}>
+				<Query query={GET_PRODUCTS} pollInterval={1000} variables={{limite: this.limite, offset: this.state.paginador.offset}}>
 					{({ loading, error, data, startPolling, stopPolling }) => {
 						if (loading) return 'Loading...';
 						if (error) return `Error: ${error.message}`;
 
-						console.log(data);
 
 						return (
-							<table className="table">
-								<thead>
+							<Fragment>
+								<table className="table">
+									<thead>
 									<tr className="table-primary">
 										<th scope="col">Nombre</th>
 										<th scope="col">Precio</th>
@@ -37,8 +64,8 @@ class Product extends Component {
 										<th scope="col">Eliminar</th>
 										<th scope="col">Editar</th>
 									</tr>
-								</thead>
-								<tbody>
+									</thead>
+									<tbody>
 									{data.getProductos.map((item) => {
 										const { id } = item;
 										return (
@@ -48,22 +75,22 @@ class Product extends Component {
 												<td>{item.stock}</td>
 												<td>
 													<Mutation mutation={DELETE_PRODUCT} onCompleted={(data) => {
-                                                        this.setState({
-                                                            alerta: {
-                                                                mostrar: true,
-                                                                mensaje: data.eliminarProducto
-                                                            }
-                                                        }, () => {
-                                                            setTimeout(() => {
-                                                                this.setState({
-                                                                    alerta: {
-                                                                        mostrar: false,
-                                                                        mensaje: ''
-                                                                    }
-                                                                })
-                                                            }, 2000)
-                                                        })
-                                                    }}>
+														this.setState({
+															alerta: {
+																mostrar: true,
+																mensaje: data.eliminarProducto
+															}
+														}, () => {
+															setTimeout(() => {
+																this.setState({
+																	alerta: {
+																		mostrar: false,
+																		mensaje: ''
+																	}
+																})
+															}, 2000)
+														})
+													}}>
 														{(eliminarProducto) => (
 															<button
 																type="button"
@@ -93,8 +120,16 @@ class Product extends Component {
 											</tr>
 										);
 									})}
-								</tbody>
-							</table>
+									</tbody>
+								</table>
+								<Paginator
+									actual={this.state.paginador.actual}
+									total={data.totalProductos}
+									limite={this.limite}
+									paginaAnterior={this.paginaAnterior}
+									paginaSiguiente={this.paginaSiguiente}
+								/>
+							</Fragment>
 						);
 					}}
 				</Query>

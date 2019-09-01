@@ -28,6 +28,7 @@ type Cliente {
         # productos
         getProductos(limite: Int, offset: Int): [Producto]
         getProducto(id: ID!): Producto
+        totalProductos: String
     }
     type Producto {
         id: ID

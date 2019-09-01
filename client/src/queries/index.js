@@ -30,13 +30,14 @@ export const CUSTOMER_QUERY = gql`
 
 // productos
 export const GET_PRODUCTS = gql`
-	query {
-		getProductos {
+	query getProductos($limite:Int, $offset:Int){
+		getProductos(limite: $limite, offset: $offset) {
 			id
 			nombre
 			precio
 			stock
 		}
+		totalProductos
 	}
 `;
 

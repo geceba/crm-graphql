@@ -4,11 +4,16 @@ import { CUSTOMERS_QUERY } from '../../queries';
 import { Link } from 'react-router-dom';
 import { DELETE_CUSTOMER } from '../../mutations';
 import Paginator from '../Paginator';
+import Success from "../alerts/Success";
 
 class Customers extends Component {
 	limite = 4;
 
 	state = {
+		alerta: {
+			mostrar: false,
+			mensaje: ''
+		},
 		paginador: {
 			offset: 0,
 			actual: 1
@@ -34,6 +39,10 @@ class Customers extends Component {
 	};
 
 	render() {
+		const { alerta: { mostrar, mensaje } } = this.state;
+
+		const alerta = mostrar ? <Success mensaje={mensaje} /> : '';
+
 		return (
 			<Query
 				query={CUSTOMERS_QUERY}
@@ -47,6 +56,7 @@ class Customers extends Component {
 					return (
 						<Fragment>
 							<h2 className="text-center">Listado de Clientes</h2>
+							{alerta}
 							<ul className="list-group">
 								{data.getClientes.map((item) => {
 									const { id } = item;
@@ -58,7 +68,23 @@ class Customers extends Component {
 												</div>
 
 												<div className="col-md-4 d-flex justify-content-end">
-													<Mutation mutation={DELETE_CUSTOMER}>
+													<Mutation mutation={DELETE_CUSTOMER} onCompleted={(data) => {
+														this.setState({
+															alerta: {
+																mostrar: true,
+																mensaje: data.eliminarCliente
+															}
+														}, () => {
+															setTimeout(() => {
+																this.setState({
+																	alerta: {
+																		mostrar: false,
+																		mensaje: ''
+																	}
+																})
+															}, 2000)
+														})
+													}}>
 														{(eliminarCliente) => (
 															<button
 																type="button"
@@ -93,7 +119,7 @@ class Customers extends Component {
 							</ul>
 							<Paginator
 								actual={this.state.paginador.actual}
-								totalClientes={data.totalClientes}
+								total={data.totalClientes}
 								limite={this.limite}
 								paginaAnterior={this.paginaAnterior}
 								paginaSiguiente={this.paginaSiguiente}
