@@ -35,7 +35,7 @@ class FormEdit extends Component {
 
 		return (
 			<Mutation mutation={UPDATE_CUSTOMER} onCompleted={() => this.props.refetch().then(() => {
-				this.props.history.push('/')
+				this.props.history.push('/customer')
 			})}>
 				{actualizarCliente => (
 					<form className="col-md-8 m-3" onSubmit={e => {
