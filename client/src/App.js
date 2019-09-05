@@ -8,7 +8,7 @@ import NewProduct from './components/products/NewProduct';
 import Product from './components/products/Products';
 import EditProduct from './components/products/EditProduct';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
+import NewOrder from "./components/order/NewOrder";
 // import components
 import Header from './components/layout/Header';
 
@@ -31,13 +31,14 @@ function App() {
 					<Header />
 					<div className="container">
 						<Switch>
-              <Route exact path="/customer" component={Customers} />
-              <Route exact path="/customer/edit/:id" component={EditCustomer} />
-              <Route exact path="/customer/new" component={NewCustomer} />
-              <Route exact path="/products/new" component={NewProduct} />
-              <Route exact path="/products" component={Product} />
-              <Route exact path="/products/edit/:id" component={EditProduct} />
-            </Switch>
+						  <Route exact path="/customer" component={Customers} />
+						  <Route exact path="/customer/edit/:id" component={EditCustomer} />
+						  <Route exact path="/customer/new" component={NewCustomer} />
+						  <Route exact path="/products/new" component={NewProduct} />
+						  <Route exact path="/products" component={Product} />
+						  <Route exact path="/products/edit/:id" component={EditProduct} />
+						  <Route exact path="/order/new/:id" component={NewOrder} />
+						</Switch>
 					</div>
 				</Fragment>
 			</Router>
